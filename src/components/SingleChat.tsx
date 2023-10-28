@@ -1,5 +1,3 @@
-import React from 'react';
-
 type SingleChatProps = {
     message: string;
     isUser: boolean;
