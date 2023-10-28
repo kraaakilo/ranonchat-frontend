@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+div.circle {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    right: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 9999px;
+    border: solid 1px #000;
+    animation: circle 10s infinite alternate;
+    transition: all 0.5s ease-in-out;
+    transform-origin: bottom;
+}
+
+@keyframes circle {
+    0% {
+       width: 100px;
+         height: 100px;
+    }
+    100% {
+        width: 200vw;
+        height: 200vw;
+    }
+}
