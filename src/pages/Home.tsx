@@ -23,7 +23,7 @@ const Home = () => {
     }, [socketUrl, lastMessage, globalStore]);
 
     const startSearching = () => {
-        setSocketUrl("ws://184.73.46.214");
+        setSocketUrl("wss://184.73.46.214");
         initMainAnimation();
         globalStore.setIsSearching(true);
     }
