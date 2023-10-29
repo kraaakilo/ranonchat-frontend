@@ -1,5 +1,4 @@
 import SingleChat from '../components/SingleChat';
-import messages from '@/data/messages.json';
 import { Button } from '../components/ui/button';
 import { LogOut } from 'lucide-react';
 import {
@@ -13,20 +12,49 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useNavigate } from 'react-router-dom';
 import { Input } from '@/components/ui/input';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useGlobalStore } from '@/store/globalStore';
+import { SocketContext } from '@/layouts/AppLayout';
 
 const Chats = () => {
-    const navigate = useNavigate();
     const messagesRef = useRef<HTMLDivElement>(null);
+    const globalStore = useGlobalStore();
+    const {socket: { sendMessage, getWebSocket}} = useContext(SocketContext);
+    const [message, setMessage] = useState<string>("");
 
     useEffect(() => {
         const messagesDiv = messagesRef.current!;
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
-    },[]);
+        return () => {
+            getWebSocket()?.close();
+        }
+    },[getWebSocket]);
     const handleCloseChat = () => {
-        navigate('/');
+        globalStore.setIsChatting(false);
+        location.reload();
+    }
+    const send = () => {
+        const data = {
+            type : "message",
+            payload : {
+                from : globalStore.chatData.from,
+                to : globalStore.chatData.to,
+                content : message,
+                timestamp : new Date().toISOString(),
+            }
+        }
+        sendMessage(JSON.stringify(data));
+        const chat = {
+            message,
+            isUser: true
+        }
+
+        const messagesDiv = messagesRef.current!;
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        
+        globalStore.setMessages([...globalStore.messages, chat]);
+        setMessage("");
     }
     return (
         <main className='container relative flex items-center justify-center min-h-screen px-2 mx-auto'>
@@ -41,7 +69,7 @@ const Chats = () => {
                                 <AlertDialogHeader>
                                     <AlertDialogTitle>Close connection ?</AlertDialogTitle>
                                     <AlertDialogDescription>
-                                        You will quit the chat and lose your connection to <span className='font-semibold'>Kraaakilo</span>.
+                                        You will quit the chat and lose your connection with your partner.
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
@@ -54,10 +82,12 @@ const Chats = () => {
                         </AlertDialog>
                     </div>
                     <div className="relative flex flex-col items-center space-x-4">
-                        <h2>You are now chatting with</h2>
+                        <h2>You are now chatting as</h2>
                         <div className="flex flex-col leading-tight">
                             <div className="flex items-center mt-1 text-xl">
-                                <span className="mr-3 font-semibold text-muted-foreground">Anderson Vanhron</span>
+                                <span className="mr-3 font-semibold text-muted-foreground">
+                                    {globalStore.chatData.username}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -68,7 +98,7 @@ const Chats = () => {
                     className="flex flex-col flex-1 p-3 space-y-4 overflow-y-auto"
                 >
                     {
-                        messages.map((item, index) => {
+                        globalStore.messages.map((item, index) => {
                             return <SingleChat key={index} message={item.message} isUser={item.isUser} />
                         })
                     }
@@ -79,11 +109,14 @@ const Chats = () => {
                             type="text"
                             placeholder="Write your ranonchat ..."
                             className='py-6 focus-visible:ring-0'
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
                         />
                         <div className="absolute inset-y-0 right-0 items-center sm:flex">
                             <Button
-                                disabled
+                                disabled={message.length === 0}
                                 className='h-full'
+                                onClick={send}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

@@ -1,4 +1,4 @@
-type SingleChatProps = {
+export type SingleChatProps = {
     message: string;
     isUser: boolean;
 };
