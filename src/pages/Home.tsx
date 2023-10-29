@@ -23,7 +23,7 @@ const Home = () => {
     }, [socketUrl, lastMessage, globalStore]);
 
     const startSearching = () => {
-        setSocketUrl("wss://184.73.46.214");
+        setSocketUrl("wss://ranonchat-backend.onrender.com");
         initMainAnimation();
         globalStore.setIsSearching(true);
     }
