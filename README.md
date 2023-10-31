@@ -1,27 +1,29 @@
-# React + TypeScript + Vite
+# Ranonchat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Ranonchat Logo](https://ranonchat.vercel.app/ranonchat.png)
 
-Currently, two official plugins are available:
+Ranonchat is a web application that enables users to communicate with each other anonymously. Your data is not stored, and no tracking is performed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Table of Contents
+- [Features](#features)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Anonymous Chat:** Engage in conversations with other users without revealing your identity.
 
-- Configure the top-level `parserOptions` property like this:
+- **No Data Storage:** We do not store any chat data, ensuring your privacy.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- **No Tracking:** Our platform does not track your activities or collect any personal information.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- **User-Friendly Interface:** A clean and intuitive user interface for a seamless chat experience.
+
+- **Real-Time Chat:** Chat with others in real time, providing instant communication.
+
+## Technologies
+
+- Frontend: [React.js](https://reactjs.dev/) (this repo)
