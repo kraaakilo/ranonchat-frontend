@@ -1,6 +1,6 @@
 # Ranonchat
 
-![Ranonchat Logo](https://ranonchat.vercel.app/ranonchat.png)
+<img src="https://ranonchat.vercel.app/ranonchat.png" width="200px"/>
 
 Ranonchat is a web application that enables users to communicate with each other anonymously. Your data is not stored, and no tracking is performed.
 
@@ -26,4 +26,4 @@ Ranonchat is a web application that enables users to communicate with each other
 
 ## Technologies
 
-- Frontend: [React.js](https://reactjs.dev/) (this repo)
+- Frontend: [React.js](https://react.dev/) (this repo)
