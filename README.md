@@ -7,10 +7,6 @@ Ranonchat is a web application that enables users to communicate with each other
 ## Table of Contents
 - [Features](#features)
 - [Technologies](#technologies)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
