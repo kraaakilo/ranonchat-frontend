@@ -2,35 +2,33 @@ import React, { useContext, useEffect } from 'react';
 import { Button } from '../components/ui/button';
 import { initMainAnimation } from '../lib/main-animation';
 import { useGlobalStore } from '@/store/globalStore';
-import { ChatData } from '@/@types/message';
 import { SocketContext } from '@/layouts/AppLayout';
+import { emptySocketMessage } from '@/data/empty-socket-message';
+import { SocketMessage } from '@/@types/socket-message';
+import { appSocketUrl, defaultSocketUrl } from '@/data/sockets';
 
 
 const Home = () => {
-
     const globalStore = useGlobalStore();
-    const { setSocketUrl, socketUrl, socket: { lastMessage } } = useContext(SocketContext);
-
+    const { setSocketUrl, socket: { lastJsonMessage } } = useContext(SocketContext);
     useEffect(() => {
-        const message: { type: string, payload: ChatData } = JSON.parse(lastMessage?.data || "{}");
+        const message = lastJsonMessage as SocketMessage || emptySocketMessage;
         if (message.type === "match") {
             globalStore.setChatData(message.payload);
             globalStore.setIsChatting(true);
             globalStore.setIsSearching(false);
         }
-
-
-    }, [socketUrl, lastMessage, globalStore]);
+    }, [lastJsonMessage]);
 
     const startSearching = () => {
-        setSocketUrl("wss://ranonchat-backend.onrender.com");
+        setSocketUrl(appSocketUrl);
         initMainAnimation();
         globalStore.setIsSearching(true);
     }
     const stopSearching = () => {
         document.querySelector("body canvas")?.remove();
         globalStore.setIsSearching(false);
-        setSocketUrl("wss://echo.websocket.org");
+        setSocketUrl(defaultSocketUrl);
     }
     return (
         <React.Fragment>

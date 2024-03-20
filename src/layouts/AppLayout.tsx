@@ -1,5 +1,7 @@
 import { SingleChatProps } from '@/components/SingleChat';
 import { ModeToggle } from '@/components/mode-toggle';
+import { toast } from '@/components/ui/use-toast';
+import { defaultSocketUrl } from '@/data/sockets';
 import useAudioPlayer from '@/hooks/useAudioPlayer';
 import { useGlobalStore } from '@/store/globalStore';
 import React, { createContext, useEffect, useState } from 'react';
@@ -22,27 +24,31 @@ export const SocketContext = createContext<SocketContextProps>({} as SocketConte
 const AppLayout = ({ children }: AppLayoutProps) => {
     const globalStore = useGlobalStore();
 
-    const [socketUrl, setSocketUrl] = useState("wss://echo.websocket.org");
+    const [socketUrl, setSocketUrl] = useState(defaultSocketUrl);
     const socket = useWebSocket(socketUrl);
 
-    const {playNotificationSound} = useAudioPlayer("/sounds/notification.mp3");
+    const { playNotificationSound } = useAudioPlayer("/sounds/notification.mp3");
 
     useEffect(() => {
-        const message: { type: string, message: string } = JSON.parse(socket.lastMessage?.data || "{}");
+        const message = socket.lastJsonMessage || JSON.parse(socket.lastMessage?.data || "{}");
         if (message.type === "quit") {
-            alert("Your partner has left the chat");
+            toast({
+                variant: "destructive",
+                title: "Your chat partner left",
+                description: "You can start searching again to find someone to talk to.",
+            });
             globalStore.setIsChatting(false);
+            setSocketUrl(defaultSocketUrl);
         }
-        
         if (message.type === "message") {
             playNotificationSound();
-            const chat : SingleChatProps = {
+            const chat: SingleChatProps = {
                 message: message.message,
                 isUser: false
             }
             globalStore.setMessages([...globalStore.messages, chat]);
         }
-    }, [socket.lastMessage]);
+    }, [socket.lastJsonMessage]);
 
 
     return (
