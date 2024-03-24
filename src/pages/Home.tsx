@@ -38,10 +38,10 @@ const Home = () => {
                 </div>
                 {
                     globalStore.isSearching ?
-                        <h2 className='text-2xl text-center md:text-5xl animate-pulse'>
+                        <h2 className='text-2xl font-bold text-center md:text-5xl animate-pulse'>
                             Searching for someone to talk to...
                         </h2>
-                        : <h2 className='text-2xl text-center md:text-5xl'>
+                        : <h2 className='text-2xl font-bold text-center md:text-5xl'>
                             Welcome to <span className='font-bold underline text-primary'>Ranonchat</span>
                         </h2>
                 }
