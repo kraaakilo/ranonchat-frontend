@@ -82,14 +82,17 @@ const Chats = () => {
                         </AlertDialog>
                     </div>
                     <div className="relative flex flex-col items-center space-x-4">
-                        <h2>You are now chatting as</h2>
+                        <h2 className='text-sm md:text-lg'>You are now chatting as</h2>
                         <div className="flex flex-col leading-tight">
                             <div className="flex items-center mt-1 text-xl">
-                                <span className="mr-3 font-semibold text-muted-foreground">
+                                <span className="mr-3 text-sm font-semibold text-muted-foreground md:text-lg">
                                     {globalStore.chatData.username}
                                 </span>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <img src="/ranonchat.png" alt="" width={50} />
                     </div>
                 </div>
                 <div
@@ -111,6 +114,11 @@ const Chats = () => {
                             className='py-6 focus-visible:ring-0'
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter" && message.length > 0) {
+                                    send();
+                                }
+                            }}
                         />
                         <div className="absolute inset-y-0 right-0 items-center sm:flex">
                             <Button

@@ -7,6 +7,7 @@ const useAudioPlayer = (url: string) => {
     const playNotificationSound = () => setPlaying(!playing);
 
     useEffect(() => {
+        audio.volume = 0.04;
         playing ? audio.play() : audio.pause();
     },
         [playing]

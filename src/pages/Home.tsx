@@ -33,8 +33,10 @@ const Home = () => {
     return (
         <React.Fragment>
             <div className='flex flex-col justify-center -translate-y-[130px]'>
-                <div className='inline-block mx-auto'>
-                    <img src="/ranonchat.png" alt="" width={260} />
+                <div className='inline-block mx-auto my-16'>
+                   <a href="/">
+                        <img src="/ranonchat.png" alt="" width={150} />
+                   </a>
                 </div>
                 {
                     globalStore.isSearching ?

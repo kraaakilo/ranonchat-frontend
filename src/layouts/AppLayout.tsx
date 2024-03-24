@@ -38,6 +38,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
                 description: "You can start searching again to find someone to talk to.",
             });
             globalStore.setIsChatting(false);
+            globalStore.setMessages([]);
             setSocketUrl(defaultSocketUrl);
         }
         if (message.type === "message") {
